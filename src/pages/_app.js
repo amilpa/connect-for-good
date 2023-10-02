@@ -6,12 +6,13 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const getLayout = Component.getLayout || ((page) => page);
   useEffect(() => {
     import("preline");
   }, []);
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </SessionProvider>
   );
 }

@@ -1,7 +1,9 @@
 import Image from "next/image";
 
 import Background from "../assets/Background.png";
-import SignInButton from "@/components/SignInButton";
+import Button from "@/components/Button";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export default function Home() {
   return (
@@ -21,7 +23,7 @@ export default function Home() {
             </p>
             {/* Buttons */}
             <div className="mt-7 grid w-full gap-3 sm:inline-flex">
-              <SignInButton>
+              <Button clickHandle={() => signIn("google")} variant={"solid"}>
                 Get started
                 <svg
                   className="h-2.5 w-2.5"
@@ -37,13 +39,13 @@ export default function Home() {
                     strokeLinecap="round"
                   />
                 </svg>
-              </SignInButton>
-              <a
+              </Button>
+              <Link
                 className="inline-flex items-center justify-center gap-x-3.5 rounded-md border px-4 py-3 text-center text-sm font-medium shadow-sm transition hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white dark:border-gray-800 dark:text-white dark:shadow-slate-700/[.7] dark:hover:border-gray-600 dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800 lg:text-base"
-                href="#"
+                href={"/dashboard"}
               >
                 Go to dashboard
-              </a>
+              </Link>
             </div>
           </div>
           {/* End Col */}
