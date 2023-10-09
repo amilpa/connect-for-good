@@ -22,7 +22,7 @@ export default function Home() {
               connect you with local non-profits that need your help.
             </p>
             {/* Buttons */}
-            <div className="mt-7 grid w-full gap-3 sm:inline-flex">
+            <div className="grid w-full gap-3 mt-7 sm:inline-flex">
               <Button clickHandle={() => signIn("google")} variant={"solid"}>
                 Get started
                 <svg
@@ -59,7 +59,7 @@ export default function Home() {
             {/* SVG*/}
             <div className="absolute bottom-0 left-0">
               <svg
-                className="ml-auto h-auto w-2/3 text-white dark:text-slate-900"
+                className="w-2/3 h-auto ml-auto text-white dark:text-slate-900"
                 width={630}
                 height={451}
                 viewBox="0 0 630 451"
