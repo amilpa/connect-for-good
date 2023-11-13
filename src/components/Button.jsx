@@ -10,10 +10,7 @@ export default function Button({ children, classNames, variant, clickHandle }) {
   }
 
   return (
-    <button
-      onClick={clickHandle}
-      className={classValues === "" ? classNames : classValues}
-    >
+    <button onClick={clickHandle} className={`${classValues} ${classNames}`}>
       {children}
     </button>
   );
