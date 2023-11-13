@@ -3,14 +3,16 @@ import Image from "next/image";
 import Background from "../assets/Background.png";
 import Button from "@/components/Button";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  if (session) router.push("/dashboard");
   return (
     <>
-      {/* Hero */}
       <div className="mx-auto max-w-[85rem] px-4 pt-12 sm:px-6 lg:px-8 lg:pt-0">
-        {/* Grid */}
         <div className="grid gap-4 md:grid-cols-2 md:items-center md:gap-8 xl:gap-20">
           <div>
             <h1 className="block text-3xl font-bold text-gray-800 dark:text-white sm:text-4xl lg:text-6xl lg:leading-tight">
@@ -22,7 +24,7 @@ export default function Home() {
               connect you with local non-profits that need your help.
             </p>
             {/* Buttons */}
-            <div className="grid w-full gap-3 mt-7 sm:inline-flex">
+            <div className="mt-7 grid w-full gap-3 sm:inline-flex">
               <Button clickHandle={() => signIn("google")} variant={"solid"}>
                 Get started
                 <svg
@@ -48,7 +50,6 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          {/* End Col */}
           <div className="relative ml-4">
             <img
               className="rounded-md lg:h-[45rem] lg:w-[55rem]"
@@ -56,10 +57,9 @@ export default function Home() {
               alt="Image Description"
             />
             <div className="absolute inset-0 -z-[1] -mb-4 -ml-4 mr-4 mt-4 h-full w-full rounded-md bg-gradient-to-tr from-gray-200 via-white/0 to-white/0 dark:from-slate-800 dark:via-slate-900/0 dark:to-slate-900/0 lg:-mb-6 lg:-ml-6 lg:mr-6 lg:mt-6" />
-            {/* SVG*/}
             <div className="absolute bottom-0 left-0">
               <svg
-                className="w-2/3 h-auto ml-auto text-white dark:text-slate-900"
+                className="ml-auto h-auto w-2/3 text-white dark:text-slate-900"
                 width={630}
                 height={451}
                 viewBox="0 0 630 451"
@@ -67,13 +67,9 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
               ></svg>
             </div>
-            {/* End SVG*/}
           </div>
-          {/* End Col */}
         </div>
-        {/* End Grid */}
       </div>
-      {/* End Hero */}
     </>
   );
 }

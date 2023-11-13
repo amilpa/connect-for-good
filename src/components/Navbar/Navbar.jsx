@@ -1,5 +1,6 @@
 import { BiLogOut } from "react-icons/bi";
-import Button from "../Button";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
 export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 flex w-full flex-wrap border-b border-gray-300 bg-white py-3 text-sm dark:border-gray-700 dark:bg-gray-800 sm:flex-nowrap sm:justify-start sm:py-4">
@@ -8,13 +9,13 @@ export default function Navbar() {
         aria-label="Global"
       >
         <div className="flex items-center justify-between">
-          <a
+          <Link
             className="flex-none text-xl font-semibold text-blue-600 "
-            href="#"
+            href={"/dashboard"}
             aria-label="Brand"
           >
             Connect for Good
-          </a>
+          </Link>
           <div className="sm:hidden">
             <button
               type="button"
@@ -52,38 +53,19 @@ export default function Navbar() {
           className="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 sm:block"
         >
           <div className="mt-5 flex flex-col gap-x-0 gap-y-4 sm:mt-0 sm:flex-row sm:items-center sm:justify-end sm:gap-x-7 sm:gap-y-0 sm:pl-7">
-            <div className="relative max-w-xs">
-              <label for="hs-table-search" className="sr-only">
-                Search
-              </label>
-              <input
-                type="text"
-                name="hs-table-search"
-                id="hs-table-search"
-                className="block w-full rounded-md border-2 border-blue-400 p-3 pl-10 text-sm outline-none focus:border-blue-800 dark:bg-slate-900 dark:text-gray-400"
-                placeholder="Search for items"
-              />
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                <svg
-                  className="h-3.5 w-3.5 text-gray-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg>
-              </div>
-            </div>
-            <Button variant={"solid"}>Create event</Button>
-            <a
+            <img
+              className="inline-block h-[2.375rem] w-[2.375rem] cursor-pointer rounded-full"
+              src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+              alt="Image Description"
+            />
+            <button
+              onClick={() => signOut()}
               className="flex items-center gap-x-2 font-medium text-black hover:text-blue-600 dark:border-gray-700 dark:text-gray-500 dark:hover:text-blue-500 sm:my-6 sm:border-l sm:border-gray-500 sm:pl-6"
               href="#"
             >
               <BiLogOut />
               Log out
-            </a>
+            </button>
           </div>
         </div>
       </nav>
