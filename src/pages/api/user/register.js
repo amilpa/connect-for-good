@@ -1,20 +1,13 @@
-import { checkUser, registerUser } from "@/models/user";
+import { getUser, registerUser } from "@/models/user";
 export default async function handler(req, res) {
   if (req.method == "POST") {
-    const check = await checkUser(req.body.email);
-    let user = {};
-    if (req.body.email === "amilpa2020@gmail.com") {
-      user = {
+    const rows = await getUser(req.body.email);
+    if (rows.length == 0) {
+      const user = {
         email: req.body.email,
-        role: "organization",
-      };
-    } else {
-      user = {
-        email: req.body.email,
+        name: req.body.name,
         role: "user",
       };
-    }
-    if (!check) {
       await registerUser(user);
     }
     res.status(200).json({ msg: "Success" });
