@@ -1,5 +1,8 @@
 import Card from "./Card";
+import Loader from "./Loader";
+
 import { useState, useEffect } from "react";
+
 export default function Grid() {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
@@ -19,13 +22,7 @@ export default function Grid() {
     };
   }, []);
   if (loading) {
-    return (
-      <div className="absolute inset-0 flex animate-pulse items-center justify-center space-x-2 bg-white">
-        <div className="h-8 w-8 rounded-full bg-blue-400"></div>
-        <div className="h-8 w-8 rounded-full bg-blue-400"></div>
-        <div className="h-8 w-8 rounded-full bg-blue-400"></div>
-      </div>
-    );
+    return <Loader />;
   }
   return (
     <div className="my-12 grid grid-cols-1 place-items-center gap-y-9 md:grid-cols-3">

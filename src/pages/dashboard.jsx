@@ -1,7 +1,7 @@
 import Layout from "@/components/Navbar/layout";
-
 import Button from "@/components/Button";
 import Grid from "@/components/Grid";
+import Loader from "@/components/Loader";
 
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -14,13 +14,7 @@ export default function Dashboard() {
   const router = useRouter();
   const { status } = useSession();
   if (status === "loading") {
-    return (
-      <div className="absolute inset-0 flex animate-pulse items-center justify-center space-x-2 bg-white">
-        <div className="h-8 w-8 rounded-full bg-blue-400"></div>
-        <div className="h-8 w-8 rounded-full bg-blue-400"></div>
-        <div className="h-8 w-8 rounded-full bg-blue-400"></div>
-      </div>
-    );
+    return <Loader />;
   }
   if (status === "unauthenticated") {
     router.push("/");
