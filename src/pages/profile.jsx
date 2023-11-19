@@ -24,16 +24,19 @@ export default function Profile() {
     let ignore = true;
     const fetchUser = async () => {
       setLoading(true);
-      const res = await fetch("/api/user", {
+      const res = await fetch("/api/user/get", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: session.user.email }),
+        body: JSON.stringify({
+          role: session.user.role,
+          email: session.user.email,
+        }),
       });
       const data = await res.json();
-      console.log(data);
-      setUserData(data.data);
+      console.log(data.data[0]);
+      setUserData(data.data[0]);
       if (ignore) setUserData(data.data);
       setLoading(false);
     };
@@ -91,43 +94,83 @@ export default function Profile() {
           </div>
           <div className="h-[800px] flex-grow overflow-y-scroll px-12 py-16">
             <h1 className="text-2xl font-semibold md:text-4xl">
-              Profile details
+              {session.user.role === "organization"
+                ? "Organization details"
+                : "Volunteer details"}
             </h1>
             <form className="mt-4 flex flex-col gap-6">
-              <Input
-                name={"Name"}
-                value={userData.name}
-                readonly={"readOnly"}
-              />
-              <Input
-                name={"Email"}
-                value={userData.email}
-                readonly={"readOnly"}
-              />
-              <Input
-                name={"Experience"}
-                value={
-                  userData.experience ? userData.experience : "(Not given)"
-                }
-                readonly={"readOnly"}
-              />
-              <Input
-                name={"Education"}
-                value={userData.education ? userData.education : "(Not given)"}
-                readonly={"readOnly"}
-              />
-              <Input
-                name={"Occupation"}
-                value={
-                  userData.occupation ? userData.occupation : "(Not given)"
-                }
-                readonly={"readOnly"}
-              />
-              <TextArea
-                name={"About"}
-                value={userData.about ? userData.about : "(Not given)"}
-                readonly={"readOnly"}
-              />
+              {session.user.role === "organization" ? (
+                <>
+                  <Input
+                    name={"Name"}
+                    value={userData.name}
+                    readonly={!update}
+                  />
+                  <Input
+                    name={"Email"}
+                    value={userData.email}
+                    readonly={!update}
+                  />
+                  <Input
+                    name={"Address"}
+                    value={
+                      userData.experience ? userData.experience : "(Not given)"
+                    }
+                    readonly={!update}
+                  />
+                  <Input
+                    name={"Goals"}
+                    value={
+                      userData.education ? userData.education : "(Not given)"
+                    }
+                    readonly={!update}
+                  />
+                  <TextArea
+                    name={"Description"}
+                    value={userData.about ? userData.about : "(Not given)"}
+                    readonly={!update}
+                  />
+                </>
+              ) : (
+                <>
+                  <Input
+                    name={"Name"}
+                    value={userData.name}
+                    readonly={!update}
+                  />
+                  <Input
+                    name={"Email"}
+                    value={userData.email}
+                    readonly={!update}
+                  />
+                  <Input
+                    name={"Experience"}
+                    value={
+                      userData.experience ? userData.experience : "(Not given)"
+                    }
+                    readonly={!update}
+                  />
+                  <Input
+                    name={"Education"}
+                    value={
+                      userData.education ? userData.education : "(Not given)"
+                    }
+                    readonly={!update}
+                  />
+                  <Input
+                    name={"Occupation"}
+                    value={
+                      userData.occupation ? userData.occupation : "(Not given)"
+                    }
+                    readonly={!update}
+                  />
+                  <TextArea
+                    name={"About"}
+                    value={userData.about ? userData.about : "(Not given)"}
+                    readonly={!update}
+                  />
+                </>
+              )}
 
               {update ? (
                 <Button
