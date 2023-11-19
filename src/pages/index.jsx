@@ -25,7 +25,10 @@ export default function Home() {
             </p>
             {/* Buttons */}
             <div className="mt-7 grid w-full gap-3 sm:inline-flex">
-              <Button clickHandle={() => signIn("google")} variant={"solid"}>
+              <Button
+                clickHandle={() => signIn("google", { callbackUrl: "/choose" })}
+                variant={"solid"}
+              >
                 Get started
                 <svg
                   className="h-2.5 w-2.5"

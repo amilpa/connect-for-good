@@ -1,4 +1,4 @@
-import { getUser } from "@/models/user";
+import { getUser } from "@/models/volunteer";
 export default async function handler(req, res) {
   if (req.method == "POST") {
     const { rows, skills } = await getUser(req.body.email);

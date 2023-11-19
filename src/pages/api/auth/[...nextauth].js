@@ -13,17 +13,17 @@ export const authOptions = {
   callbacks: {
     async signIn(data) {
       // database input operation here
-      const res = await fetch(`${process.env.URL}/api/user/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: data.user.name, email: data.user.email }),
-      });
+      // const res = await fetch(`${process.env.URL}/api/user/register`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ name: data.user.name, email: data.user.email }),
+      // });
       return true;
     },
     async session(session) {
-      const res = await fetch(`${process.env.URL}/api/user/role`, {
+      const res = await fetch(`${process.env.URL}/api/user/check`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +31,13 @@ export const authOptions = {
         body: JSON.stringify({ email: session.session.user.email }),
       });
       const data = await res.json();
-      session.session.user.role = data.role;
+      if (data.role == "volunteer") {
+        session.session.user.role = "volunteer";
+      } else if (data.role == "organization") {
+        session.session.user.role = "organization";
+      } else {
+        session.session.user.role = "not registered";
+      }
       return session.session;
     },
   },
