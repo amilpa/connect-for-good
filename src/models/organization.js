@@ -33,4 +33,17 @@ const getOrganization = async (email) => {
   return rows;
 };
 
-export { getOrganization, checkOrganization, registerOrganization };
+const updateOrganization = async (org) => {
+  await pool.query(
+    "UPDATE organization SET name=$1, address=$2, description=$3, goals=$4 WHERE email=$5",
+    [org.name, org.address, org.description, org.goals, org.email],
+  );
+  return;
+};
+
+export {
+  getOrganization,
+  checkOrganization,
+  registerOrganization,
+  updateOrganization,
+};

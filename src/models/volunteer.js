@@ -39,12 +39,13 @@ const checkVolunteer = async (email) => {
 };
 
 const getVolunteer = async (email) => {
-  const { data } = await pool.query("SELECT * FROM volunteer WHERE email=$1", [
-    email,
-  ]);
-  const { skills } = await pool.query(
-    "SELECT skills.name FROM skills INNER JOIN user_skills ON skills.id = user_skills.skill_id WHERE user_skills.user_id = $1",
-    [data[0].id],
+  const { rows: data } = await pool.query(
+    "SELECT * FROM volunteer WHERE email=$1",
+    [email],
+  );
+  const { rows: skills } = await pool.query(
+    "SELECT * FROM skills WHERE id IN (SELECT skill_id FROM volunteer_skills WHERE user_id = (SELECT id FROM volunteer WHERE email=$1))",
+    [email],
   );
   return { data, skills };
 };
@@ -57,4 +58,25 @@ const getRole = async (email) => {
   return rows;
 };
 
-export { checkVolunteer, registerVolunteer, getVolunteer, getRole };
+const updateVolunteer = async (user) => {
+  await pool.query(
+    "UPDATE volunteer SET name=$1, experience=$2, education=$3, occupation=$4, about=$5 WHERE email=$6",
+    [
+      user.name,
+      user.experience,
+      user.education,
+      user.occupation,
+      user.about,
+      user.email,
+    ],
+  );
+  return;
+};
+
+export {
+  updateVolunteer,
+  checkVolunteer,
+  registerVolunteer,
+  getVolunteer,
+  getRole,
+};
