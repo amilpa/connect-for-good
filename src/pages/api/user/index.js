@@ -1,12 +1,15 @@
-import { getUser } from "@/models/volunteer";
+import { updateVolunteer } from "@/models/volunteer";
+import { updateOrganization } from "@/models/organization";
 export default async function handler(req, res) {
-  if (req.method == "POST") {
-    const { rows, skills } = await getUser(req.body.email);
-    if (!rows[0]) {
-      res.status(404).json({ error: "User not found" });
-      return;
+  if (req.method == "PUT") {
+    const body = req.body;
+    if (body.role == "volunteer") {
+      await updateVolunteer(body.data);
+      res.status(200).json({ msg: "Success" });
+    } else if (body.role == "organization") {
+      await updateOrganization(body.data);
+      res.status(200).json({ msg: "Success" });
     }
-    res.status(200).json({ msg: "Success", data: { ...rows[0], skills } });
   }
   res.status(405).json({ error: "Method not allowed" });
 }
