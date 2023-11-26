@@ -33,7 +33,7 @@ export default function Dashboard() {
             </Link>
           )}
           <Button variant={"solid"} classNames={"block px-2 py-2 md:hidden"}>
-            <AiOutlinePlus className="h-5 w-5" />
+            <AiOutlinePlus className="w-5 h-5" />
           </Button>
         </div>
         <div className="mt-12">
@@ -50,14 +50,14 @@ export default function Dashboard() {
                 id="hs-trailing-button-add-on-with-icon"
                 name="hs-trailing-button-add-on-with-icon"
                 placeholder="Search events"
-                className="block w-full rounded-s-lg border-gray-200 px-4 py-3 text-sm shadow-md focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+                className="block w-full px-4 py-3 text-sm border-gray-200 shadow-md rounded-s-lg focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
               />
               <button
                 type="button"
                 className="inline-flex h-[2.875rem] w-[2.875rem] flex-shrink-0 items-center justify-center gap-x-2 rounded-e-md border border-transparent bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
               >
                 <svg
-                  className="h-4 w-4 flex-shrink-0"
+                  className="flex-shrink-0 w-4 h-4"
                   xmlns="http://www.w3.org/2000/svg"
                   width={24}
                   height={24}
