@@ -41,3 +41,5 @@ db.sh
 
 package-lock.json
 bun.lockb
+
+.idea/
