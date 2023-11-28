@@ -3,6 +3,8 @@ import Grid from "@/components/Grid";
 import Loader from "@/components/Loader";
 import Layout from "@/components/Navbar/layout";
 
+import Head from "next/head";
+
 import { AiOutlinePlus } from "react-icons/ai";
 
 import { useSession } from "next-auth/react";
@@ -23,6 +25,9 @@ export default function Dashboard() {
   if (status === "authenticated") {
     return (
       <div className="pt-8">
+        <Head>
+          <title>Dashboard | View events</title>
+        </Head>
         <div className="flex justify-between">
           <h1 className="text-2xl font-semibold md:text-4xl">Events</h1>
           {session.user.role === "organization" && (
