@@ -1,17 +1,26 @@
-import Image from "next/image";
-
-import Background from "../assets/Background.png";
 import Button from "@/components/Button";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+
+import { signIn } from "next-auth/react";
+
+import Head from "next/head";
 
 export default function Home() {
   const { data: session } = useSession();
-  const router = useRouter();
-  if (session) router.push("/dashboard");
+
+  function signInBruv() {
+    if (!session) {
+      signIn("google", { callbackUrl: "/choose" });
+    } else {
+      alert("You are already logged in");
+    }
+  }
   return (
     <>
+      <Head>
+        <title>Connect for good</title>
+      </Head>
       <div className="mx-auto max-w-[85rem] px-4 pt-12 sm:px-6 lg:px-8 lg:pt-0">
         <div className="grid gap-4 md:grid-cols-2 md:items-center md:gap-8 xl:gap-20">
           <div>
@@ -25,10 +34,7 @@ export default function Home() {
             </p>
             {/* Buttons */}
             <div className="mt-7 grid w-full gap-3 sm:inline-flex">
-              <Button
-                clickHandle={() => signIn("google", { callbackUrl: "/choose" })}
-                variant={"solid"}
-              >
+              <Button clickHandle={signInBruv} variant={"solid"}>
                 Get started
                 <svg
                   className="h-2.5 w-2.5"
