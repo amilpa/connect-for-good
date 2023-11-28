@@ -1,8 +1,8 @@
 import Button from "@/components/Button";
 import Layout from "@/components/Navbar/layout";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Add() {
   const router = useRouter();
@@ -62,7 +62,7 @@ export default function Add() {
           <div className="h-8 w-8 rounded-full bg-blue-400"></div>
         </div>
       )}
-      <div className="pt-8">
+      <div className="py-8">
         <h1 className="text-2xl font-semibold md:text-4xl">Add event</h1>
         <form className="mt-4 flex flex-col gap-6">
           <div>

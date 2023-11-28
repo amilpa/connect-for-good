@@ -1,8 +1,8 @@
-import { BiLogOut } from "react-icons/bi";
 import { signOut } from "next-auth/react";
+import { BiLogOut } from "react-icons/bi";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
