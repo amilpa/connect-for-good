@@ -1,9 +1,9 @@
 import { useSession } from "next-auth/react";
 
 import Button from "@/components/Button";
-import Layout from "@/components/Navbar/layout";
-import Loader from "@/components/Loader";
 import Input from "@/components/Input";
+import Loader from "@/components/Loader";
+import Layout from "@/components/Navbar/layout";
 import TextArea from "@/components/TextArea";
 
 import { CiEdit } from "react-icons/ci";
@@ -11,7 +11,7 @@ import { FaCheck } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
 
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
   const { data: session, status } = useSession();
@@ -21,8 +21,9 @@ export default function Profile() {
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
-    let ignore = true;
+    let ignore = false;
     const fetchUser = async () => {
+      console.log("fetching");
       setLoading(true);
       const res = await fetch("/api/user/get", {
         method: "POST",
@@ -34,25 +35,18 @@ export default function Profile() {
           email: session.user.email,
         }),
       });
+      if (ignore) return;
       const data = await res.json();
-      setUserData(data.data[0]);
-      if (ignore) setUserData(data.data);
+      setUserData(data.data);
       setLoading(false);
     };
     if (session) {
       fetchUser();
     }
     return () => {
-      ignore = false;
+      ignore = true;
     };
   }, [session]);
-
-  if (status === "loading") return null;
-  if (status === "unauthenticated") router.push("/");
-
-  function handleEdit() {
-    setUpdate(true);
-  }
 
   async function handleUpdate() {
     setLoading(true);
@@ -71,13 +65,19 @@ export default function Profile() {
     setUpdate(false);
   }
 
-  if (status === "authenticated" && userData) {
+  function handleEdit() {
+    setUpdate(true);
+  }
+
+  if (status === "loading") return null;
+  else if (status === "unauthenticated") router.push("/");
+  else if (status === "authenticated" && userData) {
     return (
       <>
         {loading ? (
           <Loader />
         ) : (
-          <div className="mt-8 flex h-[800px] rounded-lg shadow-lg">
+          <div className="my-8 flex h-[800px] rounded-lg shadow-lg">
             <div className="relative flex flex-col items-center gap-6 bg-slate-100 px-12 pt-12">
               {session ? (
                 <img
@@ -141,7 +141,9 @@ export default function Profile() {
                     <Input
                       name={"Address"}
                       value={
-                        userData.address ? userData.address : "(Not given)"
+                        userData.address !== null
+                          ? userData.address
+                          : "(Not given)"
                       }
                       readonly={!update}
                       onchange={(e) =>
@@ -150,7 +152,9 @@ export default function Profile() {
                     />
                     <Input
                       name={"Goals"}
-                      value={userData.goals ? userData.goals : "(Not given)"}
+                      value={
+                        userData.goals !== null ? userData.goals : "(Not given)"
+                      }
                       readonly={!update}
                       onchange={(e) =>
                         setUserData({ ...userData, goals: e.target.value })
@@ -158,10 +162,17 @@ export default function Profile() {
                     />
                     <TextArea
                       name={"Description"}
-                      value={userData.about ? userData.about : "(Not given)"}
+                      value={
+                        userData.description !== null
+                          ? userData.description
+                          : "(Not given)"
+                      }
                       readonly={!update}
                       onchange={(e) =>
-                        setUserData({ ...userData, about: e.target.value })
+                        setUserData({
+                          ...userData,
+                          description: e.target.value,
+                        })
                       }
                     />
                   </>
@@ -186,7 +197,7 @@ export default function Profile() {
                     <Input
                       name={"Experience"}
                       value={
-                        userData.experience
+                        userData.experience !== null
                           ? userData.experience
                           : "(Not given)"
                       }
@@ -198,7 +209,9 @@ export default function Profile() {
                     <Input
                       name={"Education"}
                       value={
-                        userData.education ? userData.education : "(Not given)"
+                        userData.education !== null
+                          ? userData.education
+                          : "(Not given)"
                       }
                       readonly={!update}
                       onchange={(e) =>
@@ -208,7 +221,7 @@ export default function Profile() {
                     <Input
                       name={"Occupation"}
                       value={
-                        userData.occupation
+                        userData.occupation !== null
                           ? userData.occupation
                           : "(Not given)"
                       }
@@ -219,7 +232,9 @@ export default function Profile() {
                     />
                     <TextArea
                       name={"About"}
-                      value={userData.about ? userData.about : "(Not given)"}
+                      value={
+                        userData.about !== null ? userData.about : "(Not given)"
+                      }
                       readonly={!update}
                       onchange={(e) =>
                         setUserData({ ...userData, about: e.target.value })
