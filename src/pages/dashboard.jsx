@@ -10,11 +10,21 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
+import { useRef, useState } from "react";
+
 import Link from "next/link";
 
 export default function Dashboard() {
   const router = useRouter();
+  const inputRef = useRef(null);
+  const [filter, setFilter] = useState("");
   const { data: session, status } = useSession();
+
+  function handleSearch(e) {
+    e.preventDefault();
+    setFilter(inputRef.current.value);
+  }
+
   if (status === "loading") {
     return <Loader />;
   }
@@ -56,10 +66,12 @@ export default function Dashboard() {
                 name="hs-trailing-button-add-on-with-icon"
                 placeholder="Search events"
                 className="block w-full px-4 py-3 text-sm border-gray-200 shadow-md rounded-s-lg focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600"
+                ref={inputRef}
               />
               <button
                 type="button"
                 className="inline-flex h-[2.875rem] w-[2.875rem] flex-shrink-0 items-center justify-center gap-x-2 rounded-e-md border border-transparent bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                onClick={handleSearch}
               >
                 <svg
                   className="flex-shrink-0 w-4 h-4"
@@ -80,7 +92,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <Grid />
+        <Grid filter={filter} />
       </div>
     );
   }
