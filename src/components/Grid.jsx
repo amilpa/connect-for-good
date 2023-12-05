@@ -1,14 +1,15 @@
 import Card from "./Card";
 import Loader from "./Loader";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function Grid() {
+export default function Grid({ filter }) {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("/api/event", { method: "GET" });
+      setLoading(true);
+      const res = await fetch(`/api/event?name=${filter}`, { method: "GET" });
       const data = await res.json();
       if (!ignore) {
         setEvents(data);
@@ -20,7 +21,7 @@ export default function Grid() {
     return () => {
       ignore = true;
     };
-  }, []);
+  }, [filter]);
   if (loading) {
     return <Loader />;
   }
@@ -29,17 +30,6 @@ export default function Grid() {
       {events.map((event) => {
         return <Card key={event.id} event={event} />;
       })}
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
-      <Card event={{ eventname: "Beach cleaning" }} />
     </div>
   );
 }

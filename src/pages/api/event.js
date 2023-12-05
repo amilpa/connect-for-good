@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { getEvents, addEvent } from "@/models/event";
+import { addEvent, getEvents } from "@/models/event";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -20,7 +20,8 @@ export default async function handler(req, res) {
     res.status(200).json({ msg: "Success" });
   }
   if (req.method === "GET") {
-    const events = await getEvents();
+    const { name } = req.query;
+    const events = await getEvents(name);
     res.status(200).json(events);
   }
   res.status(405).json({ error: "Method not allowed" });
