@@ -1,20 +1,3 @@
-// CREATE TABLE event (
-//     id SERIAL PRIMARY KEY,
-//     eventName VARCHAR(255),
-//     eventGoals VARCHAR(255),
-//     eventExpectedTime INT,
-//     eventDescription VARCHAR(255)
-// );
-
-// CREATE TABLE application (
-//       id SERIAL PRIMARY KEY,
-//       volunteerid INT,
-//       eventid INT,
-//       message VARCHAR(255),
-//       FOREIGN KEY (volunteerid) REFERENCES volunteer(id),
-//       FOREIGN KEY (eventid) REFERENCES event(id)
-// );
-
 import { pool } from "@/utils/pg";
 
 export const addEvent = async (event) => {
