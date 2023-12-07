@@ -4,7 +4,6 @@ import { deleteEvent, getEvent } from "@/models/event";
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const data = await getEvent(req.query.id);
-    console.log(data);
     if (data.length === 0) {
       return res.status(404).json({ error: "Event not found" });
     }
