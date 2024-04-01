@@ -8,17 +8,22 @@ export const addEvent = async (event) => {
       event.eventGoals,
       event.eventExpectedTime,
       event.eventDescription,
-    ]
+    ],
   );
   return;
 };
 
 export const getEvents = async (name) => {
-  const { rows } = await pool.query(
-    "SELECT * FROM event WHERE eventName ILIKE $1",
-    ["%" + name + "%"]
-  );
-  return rows;
+  if (name !== "") {
+    const { rows } = await pool.query(
+      "SELECT * FROM event WHERE eventName ILIKE $1",
+      ["%" + name + "%"],
+    );
+    return rows;
+  } else {
+    const { rows } = await pool.query("SELECT * FROM event");
+    return rows;
+  }
 };
 
 export const getEvent = async (id) => {
